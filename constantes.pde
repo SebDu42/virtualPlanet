@@ -26,8 +26,8 @@ final float RAYON_MOYEN = 6371.0;
 final float TAILLE_RELIEF = 0.5;
 final float RESOLUTION_MIN = 10;
 
-final int FPSMax = 15;
-final int FPSMin = 10;
+final int FPSMax = 25;
+final int FPSMin = 20;
 
 final int PAGE_UP = 16;
 final int PAGE_DOWN = 11;
