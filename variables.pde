@@ -16,25 +16,35 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// =======================  
-// Paramètres des la Terre
-// =======================
-
+// ===================================
+// Paramètre d'affichage de la planète
+// ===================================
 float echelleRelief = 30.0;
-float resolution = 10;
+float resolution = RESOLUTION_MIN;
 int nbFaces = ceil(PI * RAYON_MOYEN / resolution);
 float angleFace = PI / nbFaces;
 float angleRotation = 0.0;
 float echelle = 1.0 / 10.0;
+// Utilisé pour adapter la résolution toute les 10 images.
+int compteur = 0;
 
+// ==================
+// Tableau des vertex
+// ==================
 float[][] altitudes = new float[2 * nbFaces][nbFaces + 1];
 float[][] x = new float[2 * nbFaces][nbFaces + 1];
 float[][] y = new float[2 * nbFaces][nbFaces + 1];
 float[][] z = new float[2 * nbFaces][nbFaces + 1];
 
+// ==========================
+// Distribution des altitudes
+// ==========================
 int[] distribution = new int[21];
 int maxDistribution = 0;
 
+// ======================
+// Gestion de l'affichage
+// ======================
 boolean montreAide = false;
 boolean montreAltitude = false;
 boolean montreDistribution = false;
@@ -44,6 +54,9 @@ boolean montreViseur = false;
 boolean rotation = true;
 boolean lumiere = true;
 
+// =========================================
+// Images pour les textures et les altitudes
+// =========================================
 int nbPixels = ceil(PI * RAYON_MOYEN / RESOLUTION_MIN);
 float anglePixel = PI / nbPixels;
 PImage imageTextureAvecFond = createImage(2 * nbPixels, nbPixels + 1, RGB);
@@ -52,6 +65,9 @@ PImage imageAltitudes = createImage(2 * nbPixels, nbPixels + 1, RGB);
 PImage imageArrierePlan;
 PImage imageArrierePlan2;
 
+// =======================
+// Paramètres de la camera
+// =======================
 float longitudeCamera = 0.0;
 float latitudeCamera = 0.0;
 float altitudeCamera = 7000.0;
@@ -62,14 +78,19 @@ float xCam = r * sin(radians(longitudeCamera));
 float yCam = -(altitudeCamera + RAYON_MOYEN) * echelle * sin(radians(latitudeCamera));
 float zCam = r * cos(radians(longitudeCamera));
 
+
+// ========================
+// Paramètres de la fenêtre
+// ========================
+// Utilisée pour détectger un redimensionnement
 float largeurFenetre;
 float hauteurFenetre;
 
-int compteur = 0;
-int i = 0;
 
+// ============================
+// Gestion de l'écran d'accueil
+// ============================
 int etape = 0;
 int nbEtapes = 5;
 int[] pourcentageEtapes = new int[5];
-//int maxProgressionTotale = 2 * nbPixels + 2 * nbFaces + 3;
-//int maxProgressionPartielle; 
+int indexProgression = 0;

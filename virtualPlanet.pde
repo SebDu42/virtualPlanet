@@ -71,78 +71,78 @@ void draw() {
       break;
     case CALCULE_TEXTURES:
       for (int j = 0; j < PAS_CALCUL_ALTITUDE; j++) {
-        calculeTexture(i);
-        i = i + 1;
-        if (i == 2 * nbPixels) {
-          i = 0;
+        calculeTexture(indexProgression);
+        indexProgression = indexProgression + 1;
+        if (indexProgression == 2 * nbPixels) {
+          indexProgression = 0;
           etape = ENREGISTRE_TEXTURES;
           break;
         }
       }
-      afficheProgression(CALCULE_TEXTURES, i, 2 * nbPixels);
+      afficheProgression(CALCULE_TEXTURES, indexProgression, 2 * nbPixels);
       break;
 
     case ENREGISTRE_TEXTURES:
-      if (i == 1) {
+      if (indexProgression == 1) {
         imageTextureAvecFond.updatePixels();
         imageTextureAvecFond.save(NOM_TEXTURE_AVEC_FOND);
       }
-      else if (i == 2) {
+      else if (indexProgression == 2) {
         imageTextureSansFond.updatePixels();
         imageTextureSansFond.save(NOM_TEXTURE_SANS_FOND);
       }
-      else if (i== 3) {
+      else if (indexProgression== 3) {
         imageAltitudes.updatePixels();
         imageAltitudes.save(NOM_ALTITUDES);
       }
-      else if (i > 3) {
-        i = 0;
+      else if (indexProgression > 3) {
+        indexProgression = 0;
         etape = CALCULE_DISTRIBUTION;
       }
-      i = i + 1;
-      afficheProgression(ENREGISTRE_TEXTURES, i, 3);
+      indexProgression = indexProgression + 1;
+      afficheProgression(ENREGISTRE_TEXTURES, indexProgression, 3);
       break;
 
     case CHARGE_TEXTURES:
-      if (i == 1) {
+      if (indexProgression == 1) {
         imageTextureAvecFond = loadImage(NOM_TEXTURE_AVEC_FOND);
         imageTextureAvecFond.loadPixels();
       }
-      else if (i == 2) {
+      else if (indexProgression == 2) {
         imageTextureSansFond = loadImage(NOM_TEXTURE_SANS_FOND);
         imageTextureSansFond.loadPixels();
       }
-      else if (i== 3) {
+      else if (indexProgression== 3) {
         imageAltitudes = loadImage(NOM_ALTITUDES);      
         imageAltitudes.loadPixels();
       }
-      else if (i > 3) {
-        i = -1;
+      else if (indexProgression > 3) {
+        indexProgression = -1;
         etape = CORRIGE_ALTITUDES;
       }
-      i = i + 1;
-      afficheProgression(CHARGE_TEXTURES, i, 3);
+      indexProgression = indexProgression + 1;
+      afficheProgression(CHARGE_TEXTURES, indexProgression, 3);
       break;
       
     case CORRIGE_ALTITUDES:
       for (int j = 0; j < PAS_CORRECTION_ALTITUDE; j++) {
-        corrigeAltitude(i);
-        i = i + 1;
-        if (i == 2 * nbPixels) {
-          i = 0;
+        corrigeAltitude(indexProgression);
+        indexProgression = indexProgression + 1;
+        if (indexProgression == 2 * nbPixels) {
+          indexProgression = 0;
           etape = CALCULE_DISTRIBUTION;
           break;
         }
       }
-      afficheProgression(CORRIGE_ALTITUDES, i, 2 * nbPixels);
+      afficheProgression(CORRIGE_ALTITUDES, indexProgression, 2 * nbPixels);
       break;
     
     case CALCULE_DISTRIBUTION:
       for (int j = 0; j < PAS_CORRECTION_ALTITUDE; j++) {
-        calculeDistribution(i);
-        i = i + 1;
-        if (i == 2 * nbPixels) {
-          i = 0;
+        calculeDistribution(indexProgression);
+        indexProgression = indexProgression + 1;
+        if (indexProgression == 2 * nbPixels) {
+          indexProgression = 0;
           resolution = 100;
           nbFaces = ceil(PI * RAYON_MOYEN / resolution);
           angleFace = PI / nbFaces;
@@ -154,7 +154,7 @@ void draw() {
           break;
         }
       }
-      afficheProgression(CALCULE_DISTRIBUTION, i, 2 * nbPixels);
+      afficheProgression(CALCULE_DISTRIBUTION, indexProgression, 2 * nbPixels);
       
       break;
     case AFFICHE_PLANETE:
