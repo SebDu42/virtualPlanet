@@ -20,7 +20,7 @@
 void setup() {
   size(1024, 768, P3D);
   surface.setResizable(true);
-  frameRate(120);
+  frameRate(60);
 
   noiseDetail(100, 0.5);
   imageTextureAvecFond.loadPixels();
@@ -67,7 +67,7 @@ void draw() {
       stroke(BLANC);
       fill(BLANC);
       textAlign(CENTER, CENTER);
-      text("Voulez-vous réutiliser la dernière planète génrée (O/N) ?", width / 2, height / 2);
+      text("Voulez-vous réutiliser la dernière planète générée (O/N) ?", width / 2, height / 2);
       break;
     case CALCULE_TEXTURES:
       for (int j = 0; j < PAS_CALCUL_ALTITUDE; j++) {
