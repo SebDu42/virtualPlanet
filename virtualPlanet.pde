@@ -16,6 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
 /**
   * Virtual Planet
   *
@@ -33,6 +34,7 @@
   * @author Sébastien Dupuis
   * @version 1.0.1
   */
+
 
 /**
   * Initialisation
@@ -75,7 +77,7 @@ void draw() {
   background(imageArrierePlan2);
   
   switch (etape) {
-    // Si une planète à déjà été créée, on demande s'il faut la garder
+    // Si une planète a déjà été créée, on demande s'il faut la garder
     case NOUVELLE_PLANETE:
       afficheTitre();
       afficheLicence();

@@ -16,7 +16,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+/**
+  * Gestion du clavier
+  */
 void keyPressed() {
+  // On ne gère pas le clavier pendant l'initialisation. On attend donc d'en 
+  // être à l'étape d'affichage de la planète.
   if (etape == AFFICHE_PLANETE) {
     if (key == CODED) {
       if ((keyCode == UP) && (latitudeCamera + pasAngleCamera < 90)) latitudeCamera += pasAngleCamera;
@@ -45,8 +51,12 @@ void keyPressed() {
       if ((keyCode == PAGE_DOWN) && (altitudeCamera + pasAltitudeCamera <= 20000)) altitudeCamera += 100;
       if (keyCode == F1) montreAide = !montreAide;
     }
+    // On recalcule les paramètres de la caméra au cas ou ils auraient changé.
+    // À faire : ne le faire que si les paramètres ont été changés.
     initialiseCamera();
   }
+  // Au lancement du programme, si une planète a déja été  créée, on attend la 
+  // réponse de l'utilisateur pour savoir s'il faut la garder ou non.
   else if (etape == NOUVELLE_PLANETE) {
       if ((key == 'o') || (key == 'O')) {
         etape = CHARGE_TEXTURES;
@@ -68,6 +78,11 @@ void keyPressed() {
   println(keyCode, " ", key, " ", key == CODED, " ", frameRate);
 }
 
+
+/**
+  * Change le pas de déplacement angulaire de la céméra lorsque l'on relâche la
+  * touche Shift (Maj).
+  */
 void keyReleased() {
   if (keyCode == SHIFT) pasAngleCamera = 5;
 }
