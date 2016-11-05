@@ -21,11 +21,17 @@
   *
   * Cette application permet de générer puis d'afficher une planète aux 
   * reliefs aléatoires. Il est ensuite possible d'afficher des informations
-  * altimétriques sur un point de la surface pointé par un viseur.
+  * altimétriques sur un point de la surface ciblé par un viseur.
   * Elle a été dévellopée pour être utilisée en lycée en cours de Sciences de la
   * Vie et de la Terre, afin de montrer que les reliefs de la Terre ne peuvent
   * pas être le résultat d'un processus aléatoire, car de tel processus donnent
   * une répartition gaussienne des altitudes.
+  *
+  * La résolution et d'un point altimétrique tous les 10kms au niveau de
+  * l'équateur, avec un précision de l'altitude au mètre près.
+  *
+  * @author Sébastien Dupuis
+  * @version 1.0.1
   */
 
 /**

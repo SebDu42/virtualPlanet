@@ -16,14 +16,24 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+/**
+  * Affiche les barres de progression lors de l'initialisation.
+  *
+  * @param numEtape Numéro de l'étape en cours
+  * @param progression Progression dans l'étape en cours (entre 0 et maximum)
+  * @param maximum Valeur maximale de Progression
+  */
 void afficheProgression(int numEtape, int progression, int maximum) {
   float pourcentTotale;
   float pourcentPartielle = (float) progression * 100 / maximum;
   int debutTotale = 0;
   
+  // Calcul des valeurs de la progression totale
   for (int i=0; i< numEtape; i++) debutTotale += pourcentageEtapes[i];
   pourcentTotale = debutTotale + pourcentPartielle * pourcentageEtapes[numEtape] / 100;
   
+  // Affichage du titre de l'application et de la licence
   afficheTitre();
   afficheLicence();
   
@@ -31,10 +41,14 @@ void afficheProgression(int numEtape, int progression, int maximum) {
   textSize(20);
   stroke(BLANC);
   fill(BLANC);
+  
+  // Texte descriptif de l'étape en cours
   textAlign(CENTER, BOTTOM);
   text("Initialisation merci de patienter...", width / 2, (height / 2) - 75);
   text(TEXTE_ETAPES[numEtape], width / 2, (height / 2) - 50);
   textAlign(LEFT, BOTTOM);
+
+  // Barre donnant la progression totale
   text("Progression totale : " + str(int(pourcentTotale)) + "%",5, (height / 2) - 25);
   noStroke();
   fill(BLEU_AZUR);
@@ -43,6 +57,8 @@ void afficheProgression(int numEtape, int progression, int maximum) {
   noFill();
   rect(5, (height / 2) - 20, width - 10, 20); 
   fill(BLANC);
+  
+  // Barre donnant la progression de l'étape en cours
   text("Progression de l'étape : " + str(int(pourcentPartielle)) + "%",5, (height / 2) + 30);
   noStroke();
   fill(BLEU_AZUR);
@@ -51,9 +67,12 @@ void afficheProgression(int numEtape, int progression, int maximum) {
   noFill();
   rect(5, (height / 2) + 35, width - 10, 20); 
   
-  //println(frameRate);
 }
 
+
+/**
+  * Affiche le nom de l'application et du numéro de version
+  */
 void afficheTitre() {
   strokeWeight(2);
   textSize(40);
@@ -63,6 +82,10 @@ void afficheTitre() {
   text("Virtual Planet " + VERSION, width / 2, height / 10);
 }
 
+
+/**
+  * Affiche la licence de l'application (GPL3)
+  */
 void afficheLicence() {
   strokeWeight(2);
   textSize(12);
@@ -73,6 +96,9 @@ void afficheLicence() {
   text("This is free software, distribut under the terms of the GNU General Public License version 3", 5, height - 5);
 }
 
+/**
+  * Affiche l'aide
+  */
 void afficheAide() {
   int largeur = 620;
   int hauteur = 315;
@@ -129,6 +155,11 @@ void afficheAide() {
   text(": Revenir à la situation initiale", gauche + 275, haut);
 }
 
+
+/**
+  * Affiche l'altitude, la lattitude et la longitude du point de la surface
+  * ciblé par le viseur.
+  */
 void afficheAltitude() {
   float longitude = longitudeCamera - degrees(angleRotation);
   float latitude = int(latitudeCamera * 10.0) / 10.0;
@@ -159,6 +190,10 @@ void afficheAltitude() {
   text(": " + str(altitude) + " m", 100, 70);
 }
 
+
+/**
+  * Affiche la distribution des altitudes.
+  */
 void afficheDistribution() {
   stroke(255);
   strokeWeight(5);
@@ -174,6 +209,11 @@ void afficheDistribution() {
   }
 }
 
+
+/**
+  * Affiche le curseur permettant de voir le facteur d'échelle appliqué sur les
+  * reliefs.
+  */
 void afficheCurseurRelief() {
   stroke(255);
   strokeWeight(5);
@@ -186,6 +226,14 @@ void afficheCurseurRelief() {
   rect (width - 25, haut, 20, hauteur);
 }
 
+
+/**
+  * Affiche des informations sur les paramètres d'affichage.
+  *
+  * Affiche le nombre d'images par seconde, la résolution de la surface,
+  * la distance à laquelle se trouve la caméra et le facteur d'échelle appliqué
+  * aux reliefs.
+  */
 void afficheInformations() {
   stroke(255);
   strokeWeight(5);
@@ -200,6 +248,11 @@ void afficheInformations() {
   text("Relief : x" + str(echelleRelief), width - 225, 90);
 }
 
+
+/**
+  * Affiche le viseur permettant de repérer le point dont on peut afficher les
+  * données altimétriques.
+  */
 void afficheViseur() {
   stroke(255, 0, 0);
   strokeWeight(4);
