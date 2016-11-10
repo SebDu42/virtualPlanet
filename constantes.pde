@@ -16,34 +16,37 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// ===========================
-// Paramètres de l'application
-// ===========================
+
+/*
+ * Version de l'application
+ */
 final String VERSION = "1.0.1";
 
-// ========================
-// Paramètres de la planète
-// ========================
+
+/*
+ * Paramètres de la planète
+ */
 final float RAYON_MOYEN = 6371.0; // Rayon moyen de la Terre : 6371Kms
-final float TAILLE_RELIEF = 0.5;
-final float RESOLUTION_MIN = 10;
+final float TAILLE_RELIEF = 0.5;  // Echelle en longitude/lattitude des reliefs
+final float RESOLUTION_MIN = 10;  // Distance entre 2 points altimétrique au niveau de l'équateur
 
-// ======================
-// Paramètres d'affichage
-// ======================
-final int FPSMax = 25;
-final int FPSMin = 20;
+/*
+ * Paramètres d'affichage
+ */
+// Nombres d'images par seconde : utilisés pour ajuster la résolution de la surface
+final int FPSMax = 25; // Nombre maximal d'images par seconde
+final int FPSMin = 20; // Nombre minimal d'images par seconde
 
-// ================
-// Code des touches
-// ================
+/*
+ * Code des touches (pour les touches non définies par défaut)
+ */
 final int PAGE_UP = 16;
 final int PAGE_DOWN = 11;
 final int F1 = 97;
 
-// =======================
-// Etapes d'initialisation
-// =======================
+/*
+ * Etapes d'initialisation
+ */
 // Codes des étapes
 final int CALCULE_TEXTURES = 0;
 final int ENREGISTRE_TEXTURES = 1;
@@ -63,9 +66,9 @@ final int PAS_CALCUL_ALTITUDE = 5;
 final int PAS_CORRECTION_ALTITUDE = 100;
 final int PAS_CALCUL_DISTRIBUTION = 100;
 
-// ========
-// Couleurs
-// ========
+/*
+ * Couleurs
+ */
 final color BLANC = color(255);
 final color GRIS = color(128);
 final color NOIR = color(0);
@@ -75,9 +78,9 @@ final color BLEU_CIEL = color(0, 192, 255);
 final color BLEU_AZUR = color(0, 128, 255);
 final color BLEU_NUIT = color(0, 0, 128);
 
-// =================
-// Noms des fichiers
-// =================
+/*
+ * Noms des fichiers
+ */
 final String NOM_TEXTURE_AVEC_FOND = "data/texture_avec_fond.tiff";
 final String NOM_TEXTURE_SANS_FOND = "data/texture_sans_fond.tiff";
 final String NOM_ALTITUDES = "data/altitudes.tiff";
