@@ -16,6 +16,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+/**
+  * Retourne vrai si tous les fichiers nécessaire pour charger la planètre
+  * générée lors du dernier chargement sont présents.
+  */
 boolean fichiersExistent() {
   File fichier;
   
@@ -31,6 +36,11 @@ boolean fichiersExistent() {
   return true;
 }
 
+
+/**
+  * Retourne la couleur correspondant à l'altitude passée en parmètre, en tenant
+  * compte également de la profondeur des fonds marins.
+  */
 color couleurAltitudeAvecFond(float altitude) {
   color couleur;
   if (altitude > 10) couleur = color(255, 0, 0);
@@ -45,6 +55,12 @@ color couleurAltitudeAvecFond(float altitude) {
   return couleur;
 }
 
+
+/**
+  * Retourne la couleur correspondant à l'altitude passée en parmètre, sans
+  * tenir compte la profondeur des fonds marins (une seule couleur pour les
+  * fonds).
+  */
 color couleurAltitudeSansFond(float altitude) {
   color couleur;
   if (altitude > 10) couleur = color(255, 0, 0);
@@ -56,6 +72,12 @@ color couleurAltitudeSansFond(float altitude) {
   return couleur;
 }
 
+/**
+  * Retourne une couleur proportiopnnelle à "valeur".
+  * Cette fonction se comporte comme la fonction map de processinf, mis à part
+  * que la raviable retournée est une couleur comprise entre couleurDebut et
+  * couleurFin au lieu d'un entier.
+  */
 color mapCouleur(float valeur, float debut, float fin, color couleurDebut, color couleurFin) {
   int a = round(map(valeur, debut, fin, alpha(couleurDebut), alpha(couleurFin)));
   int r = round(map(valeur, debut, fin, red(couleurDebut), red(couleurFin)));
@@ -72,6 +94,10 @@ int calculeAltitudePosition(float longitude, float latitude) {
   return calculeAltitudePixel(x ,y);
 }
 
+
+/**
+  * Retourne l'altitude du pixel situé aux corrdonnées (x,y) de l'image
+  */
 int calculeAltitudePixel(int x, int y) {
  
   if (x < 0) x = 0;
