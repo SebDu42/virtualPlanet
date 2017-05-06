@@ -17,6 +17,7 @@
 */
 
 
+
 /**
   * Affiche les barres de progression lors de l'initialisation.
   *

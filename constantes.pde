@@ -48,15 +48,16 @@ final int F1 = 97;
  * Etapes d'initialisation
  */
 // Codes des étapes
-final int CALCULE_TEXTURES = 0;
-final int ENREGISTRE_TEXTURES = 1;
-final int CHARGE_TEXTURES = 2;
-final int CORRIGE_ALTITUDES = 3;
-final int CALCULE_DISTRIBUTION = 4;
-final int AFFICHE_PLANETE = 11;
-final int NOUVELLE_PLANETE = 10;
+final int NOUVELLE_PLANETE = 0;
+final int CALCULE_TEXTURES = 1;
+final int ENREGISTRE_TEXTURES = 2;
+final int CHARGE_TEXTURES = 3;
+final int CORRIGE_ALTITUDES = 4;
+final int CALCULE_DISTRIBUTION = 5;
+final int AFFICHE_PLANETE = 6;
 // Texte pour l'écran de progression
-final String[] TEXTE_ETAPES = {"Calcul des altitudes", 
+final String[] TEXTE_ETAPES = {"",
+                               "Calcul des altitudes", 
                                "Enregistrement des textures",
                                "Chargement des textures",
                                "Calcul des altitudes",

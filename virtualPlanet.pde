@@ -57,11 +57,12 @@ void setup() {
   }
   else {
     etape = CALCULE_TEXTURES;
-    pourcentageEtapes[0] = 90;
-    pourcentageEtapes[1] = 5;
-    pourcentageEtapes[2] = 0;
+    pourcentageEtapes[0] = 0;
+    pourcentageEtapes[1] = 90;
+    pourcentageEtapes[2] = 5;
     pourcentageEtapes[3] = 0;
-    pourcentageEtapes[4] = 5;
+    pourcentageEtapes[4] = 0;
+    pourcentageEtapes[5] = 5;
   }
 }
 

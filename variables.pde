@@ -92,5 +92,5 @@ float hauteurFenetre;
 // ============================
 int etape = 0;
 int nbEtapes = 5;
-int[] pourcentageEtapes = new int[5];
+int[] pourcentageEtapes = new int[6];
 int indexProgression = 0;
