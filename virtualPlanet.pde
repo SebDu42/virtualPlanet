@@ -83,41 +83,12 @@ void draw() {
       afficheQuestion();
       break;
 
-    // Première étape de l'initialisation si la planète est recalculée :
-    // Calcul des textures et des altitudes.
+    // Initialisation
     case CALCULE_ALTITUDES:
     case ENREGISTRE_FICHIERS:
     case CHARGE_FICHIERS:
     case CORRIGE_ALTITUDES:
-      afficheProgression();
-      break;
-      
-    // Troisième étape de l'initialisation :
-    // Calcul de la distribution des altitudes.
     case CALCULE_DISTRIBUTION:
-      calculeDistribution();
-      etape = AFFICHE_PLANETE;
-      //for (int j = 0; j < PAS_CORRECTION_ALTITUDE; j++) {
-      //  calculeDistribution(indexProgression);
-      //  indexProgression = indexProgression + 1;
-      //  if (indexProgression == 2 * nbPixels) {
-      //    indexProgression = 0;
-      //    resolution = 100;
-      //    nbFaces = ceil(PI * RAYON_MOYEN / resolution);
-      //    angleFace = PI / nbFaces;
-      //    for (int k = 0; k <= 2 * nbFaces; k++) {
-      //      calculeAltitudes(k);
-      //    }
-      //    initialiseCamera();
-      //    etape = AFFICHE_PLANETE;
-      //    break;
-      //  }
-      //}
-      resolution = 100;
-      nbFaces = ceil(PI * RAYON_MOYEN / resolution);
-      angleFace = PI / nbFaces;
-      calculePrimitive();
-      initialiseCamera();
       afficheProgression();
       break;
       
@@ -141,7 +112,7 @@ void draw() {
       if ((width != largeurFenetre) || (height != hauteurFenetre)) {
         largeurFenetre = width;
         hauteurFenetre = height;
-        initialiseCamera();
+        modifiePositionCamera();
       }
       
       // Affichage des informations 

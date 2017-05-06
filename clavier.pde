@@ -53,7 +53,7 @@ void keyPressed() {
     }
     // On recalcule les paramètres de la caméra au cas ou ils auraient changé.
     // À faire : ne le faire que si les paramètres ont été changés.
-    initialiseCamera();
+    modifiePositionCamera();
   }
   // Au lancement du programme, si une planète a déja été  créée, on attend la 
   // réponse de l'utilisateur pour savoir s'il faut la garder ou non.

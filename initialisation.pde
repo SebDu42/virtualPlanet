@@ -78,7 +78,7 @@ void enregistreFichiers() {
   imageAltitudes.save(NOM_ALTITUDES);
   indexProgression++;
   
-  etape = CALCULE_DISTRIBUTION;
+  calculeDistribution();
 
 }
 
@@ -137,7 +137,7 @@ void corrigeAltitudes() {
     indexProgression++;
   }
   
-  etape = CALCULE_DISTRIBUTION;
+  calculeDistribution();
 
 }
 
@@ -169,10 +169,28 @@ void calculeDistribution() {
     indexProgression++;
   }
   
+  initialiseScene();
+  etape = AFFICHE_PLANETE;
+  
 }
 
 
-void initialiseCamera() {
+/**
+  * Initialise la scène
+  */
+void initialiseScene() {
+      resolution = 100;
+      nbFaces = ceil(PI * RAYON_MOYEN / resolution);
+      angleFace = PI / nbFaces;
+      calculePrimitive();
+      modifiePositionCamera();  
+}
+
+
+/**
+  * Modifie la position de la camera
+  */
+void modifiePositionCamera() {
   r = (altitudeCamera + RAYON_MOYEN) * echelle * cos(radians(latitudeCamera));
   xCam = r * sin(radians(longitudeCamera));
   yCam = -(altitudeCamera + RAYON_MOYEN) * echelle * sin(radians(latitudeCamera));
