@@ -20,7 +20,7 @@
 /*
  * Version de l'application
  */
-final String VERSION = "1.1.0";
+final String VERSION = "1.1.1";
 
 
 /*

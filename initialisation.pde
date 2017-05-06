@@ -62,25 +62,21 @@ void enregistreTexture() {
   etape = ENREGISTRE_TEXTURES;
   progressionMax = 3;
   indexProgression = 0;
-  println(100 * indexProgression / progressionMax);
   
   // Enregistrement de la texture avec fonds marins
   imageTextureAvecFond.updatePixels();
   imageTextureAvecFond.save(NOM_TEXTURE_AVEC_FOND);
   indexProgression++;
-  println(100 * indexProgression / progressionMax);
   
   // Enregistrement de la texture sans fond marins
   imageTextureSansFond.updatePixels();
   imageTextureSansFond.save(NOM_TEXTURE_SANS_FOND);
   indexProgression++;
-  println(100 * indexProgression / progressionMax);
   
   // Enregistrement des altitudes
   imageAltitudes.updatePixels();
   imageAltitudes.save(NOM_ALTITUDES);
   indexProgression++;
-  println(100 * indexProgression / progressionMax);
   
   etape = CALCULE_DISTRIBUTION;
 
@@ -95,25 +91,21 @@ void chargeTexture() {
   etape = CHARGE_TEXTURES;
   progressionMax = 3;
   indexProgression = 0;
-  println(100 * indexProgression / progressionMax);
 
   // Chargement de la texture avec fonds marins
   imageTextureAvecFond = loadImage(NOM_TEXTURE_AVEC_FOND);
   imageTextureAvecFond.loadPixels();
   indexProgression++;
-  println(100 * indexProgression / progressionMax);
 
   // Chargement de la texture sans fond marins
   imageTextureSansFond = loadImage(NOM_TEXTURE_SANS_FOND);
   imageTextureSansFond.loadPixels();
   indexProgression++;
-  println(100 * indexProgression / progressionMax);
 
   // Chargement des altitudes
   imageAltitudes = loadImage(NOM_ALTITUDES);      
   imageAltitudes.loadPixels();
   indexProgression++;
-  println(100 * indexProgression / progressionMax);
   
   corrigeAltitude();
   
@@ -130,9 +122,9 @@ void corrigeAltitude() {
   color couleur;
   int index;
   
+  etape = CORRIGE_ALTITUDES;
   progressionMax = 2 * nbPixels;
   indexProgression = 0;
-  println(100 * indexProgression / progressionMax);
 
   for (int colonne = 0; colonne < 2 * nbPixels; colonne++) {
     for (int ligne = 0; ligne < nbPixels + 1; ligne++) {
@@ -143,7 +135,6 @@ void corrigeAltitude() {
       imageAltitudes.pixels[index] = couleur;
     }
     indexProgression++;
-    println(100 * indexProgression / progressionMax);
   }
   
   etape = CALCULE_DISTRIBUTION;
@@ -159,9 +150,9 @@ void corrigeAltitude() {
 void calculeDistribution() {
   float altitude = 0;
   
+  etape = CALCULE_DISTRIBUTION;
   progressionMax = 2 * nbPixels;
   indexProgression = 0;
-  println(100 * indexProgression / progressionMax);
   
   for (int colonne = 0; colonne < 2 * nbPixels; colonne++) {
     for (int ligne = nbPixels / 4; ligne < 3 * nbPixels / 4; ligne++) {
@@ -176,7 +167,6 @@ void calculeDistribution() {
       }
     }
     indexProgression++;
-    println(100 * indexProgression / progressionMax);
   }
   
 }
