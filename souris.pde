@@ -17,9 +17,9 @@
 */
 
 void mouseDragged() {
-  if ((mouseX > width - 25) && (mouseX < width - 5) && (mouseY > 5) && (mouseY < height - 5)) {
-    echelleRelief = map(mouseY, 5, height - 5, 100, 1);
-  }
+  //if ((mouseX > width - 25) && (mouseX < width - 5) && (mouseY > 5) && (mouseY < height - 5)) {
+  //  echelleRelief = map(mouseY, 5, height - 5, 100, 1);
+  //}
 }
 
 void mouseClicked() {
