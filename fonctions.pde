@@ -72,21 +72,6 @@ color couleurAltitudeSansFond(float altitude) {
   return couleur;
 }
 
-/**
-  * Retourne une couleur proportiopnnelle à "valeur".
-  * Cette fonction se comporte comme la fonction map de processinf, mis à part
-  * que la raviable retournée est une couleur comprise entre couleurDebut et
-  * couleurFin au lieu d'un entier.
-  */
-color mapCouleur(float valeur, float debut, float fin, color couleurDebut, color couleurFin) {
-  int a = round(map(valeur, debut, fin, alpha(couleurDebut), alpha(couleurFin)));
-  int r = round(map(valeur, debut, fin, red(couleurDebut), red(couleurFin)));
-  int v = round(map(valeur, debut, fin, green(couleurDebut), green(couleurFin)));
-  int b = round(map(valeur, debut, fin, blue(couleurDebut), blue(couleurFin)));
-  
-  return color(r, v, b, a);
-}
-
 int calculeAltitudePosition(float longitude, float latitude) {
   int x = round((longitude + 180) / degrees(anglePixel));
   int y = round((90 - latitude) / degrees(anglePixel));
