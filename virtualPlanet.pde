@@ -56,13 +56,13 @@ void setup() {
     etape = NOUVELLE_PLANETE;
   }
   else {
-    etape = CALCULE_TEXTURES;
     pourcentageEtapes[0] = 0;
     pourcentageEtapes[1] = 90;
     pourcentageEtapes[2] = 5;
     pourcentageEtapes[3] = 0;
     pourcentageEtapes[4] = 0;
     pourcentageEtapes[5] = 5;
+    thread("calculeTexture");
   }
 }
 
@@ -80,112 +80,45 @@ void draw() {
   switch (etape) {
     // Si une planète a déjà été créée, on demande s'il faut la garder
     case NOUVELLE_PLANETE:
-      afficheTitre();
-      afficheLicence();
-      strokeWeight(2);
-      textSize(20);
-      stroke(BLANC);
-      fill(BLANC);
-      textAlign(CENTER, CENTER);
-      text("Voulez-vous réutiliser la dernière planète générée (O/N) ?", width / 2, height / 2);
+      afficheQuestion();
       break;
 
     // Première étape de l'initialisation si la planète est recalculée :
     // Calcul des textures et des altitudes.
     case CALCULE_TEXTURES:
-      for (int j = 0; j < PAS_CALCUL_ALTITUDE; j++) {
-        calculeTexture(indexProgression);
-        indexProgression = indexProgression + 1;
-        if (indexProgression == 2 * nbPixels) {
-          indexProgression = 0;
-          etape = ENREGISTRE_TEXTURES;
-          break;
-        }
-      }
-      afficheProgression(CALCULE_TEXTURES, indexProgression, 2 * nbPixels);
-      break;
-    
-    // Deuxième étape de l'initialisation si la planète est recalculée :
-    // Enregistrement des textures et des altitudes.
     case ENREGISTRE_TEXTURES:
-      if (indexProgression == 1) {
-        imageTextureAvecFond.updatePixels();
-        imageTextureAvecFond.save(NOM_TEXTURE_AVEC_FOND);
-      }
-      else if (indexProgression == 2) {
-        imageTextureSansFond.updatePixels();
-        imageTextureSansFond.save(NOM_TEXTURE_SANS_FOND);
-      }
-      else if (indexProgression== 3) {
-        imageAltitudes.updatePixels();
-        imageAltitudes.save(NOM_ALTITUDES);
-      }
-      else if (indexProgression > 3) {
-        indexProgression = 0;
-        etape = CALCULE_DISTRIBUTION;
-      }
-      indexProgression = indexProgression + 1;
-      afficheProgression(ENREGISTRE_TEXTURES, indexProgression, 3);
-      break;
-    
-    // Première étape de l'initialisation si une planète est réutilisée :
-    // Chargement des texture et des altitudes.
     case CHARGE_TEXTURES:
-      if (indexProgression == 1) {
-        imageTextureAvecFond = loadImage(NOM_TEXTURE_AVEC_FOND);
-        imageTextureAvecFond.loadPixels();
-      }
-      else if (indexProgression == 2) {
-        imageTextureSansFond = loadImage(NOM_TEXTURE_SANS_FOND);
-        imageTextureSansFond.loadPixels();
-      }
-      else if (indexProgression== 3) {
-        imageAltitudes = loadImage(NOM_ALTITUDES);      
-        imageAltitudes.loadPixels();
-      }
-      else if (indexProgression > 3) {
-        indexProgression = -1;
-        etape = CORRIGE_ALTITUDES;
-      }
-      indexProgression = indexProgression + 1;
-      afficheProgression(CHARGE_TEXTURES, indexProgression, 3);
+    case CORRIGE_ALTITUDES:
+      afficheProgression();
       break;
       
-    // Deuxième étape de l'initialisation si une planète est réutilisée :
-    // Correction des altitudes.
-    case CORRIGE_ALTITUDES:
-      for (int j = 0; j < PAS_CORRECTION_ALTITUDE; j++) {
-        corrigeAltitude(indexProgression);
-        indexProgression = indexProgression + 1;
-        if (indexProgression == 2 * nbPixels) {
-          indexProgression = 0;
-          etape = CALCULE_DISTRIBUTION;
-          break;
-        }
-      }
-      afficheProgression(CORRIGE_ALTITUDES, indexProgression, 2 * nbPixels);
-      break;
-
     // Troisième étape de l'initialisation :
     // Calcul de la distribution des altitudes.
     case CALCULE_DISTRIBUTION:
-      for (int j = 0; j < PAS_CORRECTION_ALTITUDE; j++) {
-        calculeDistribution(indexProgression);
-        indexProgression = indexProgression + 1;
-        if (indexProgression == 2 * nbPixels) {
-          indexProgression = 0;
-          resolution = 100;
-          nbFaces = ceil(PI * RAYON_MOYEN / resolution);
-          angleFace = PI / nbFaces;
-          for (int k = 0; k <= 2 * nbFaces; k++) {
-            calculeAltitudes(k);
-          }
-          initialiseCamera();
-          etape = AFFICHE_PLANETE;
-          break;
-        }
-      }
-      afficheProgression(CALCULE_DISTRIBUTION, indexProgression, 2 * nbPixels);
+      calculeDistribution();
+      etape = AFFICHE_PLANETE;
+      //for (int j = 0; j < PAS_CORRECTION_ALTITUDE; j++) {
+      //  calculeDistribution(indexProgression);
+      //  indexProgression = indexProgression + 1;
+      //  if (indexProgression == 2 * nbPixels) {
+      //    indexProgression = 0;
+      //    resolution = 100;
+      //    nbFaces = ceil(PI * RAYON_MOYEN / resolution);
+      //    angleFace = PI / nbFaces;
+      //    for (int k = 0; k <= 2 * nbFaces; k++) {
+      //      calculeAltitudes(k);
+      //    }
+      //    initialiseCamera();
+      //    etape = AFFICHE_PLANETE;
+      //    break;
+      //  }
+      //}
+      resolution = 100;
+      nbFaces = ceil(PI * RAYON_MOYEN / resolution);
+      angleFace = PI / nbFaces;
+      calculeAltitudes();
+      initialiseCamera();
+      afficheProgression();
       break;
       
     // L'initialisation est terminée, on affiche la planète.
@@ -264,18 +197,14 @@ void draw() {
           resolution += 10.0;
           nbFaces = ceil(PI * RAYON_MOYEN / resolution);
           angleFace = PI / nbFaces;
-          for (int i=0; i<= 2 * nbFaces; i++) {
-            calculeAltitudes(i);
-          }
+          calculeAltitudes();
         }
         else if (frameRate > FPSMax) {
           resolution -= 10.0;
           if (resolution < 10) resolution = 10;
           nbFaces = ceil(PI * RAYON_MOYEN / resolution);
           angleFace = PI / nbFaces;
-          for (int i=0; i<= 2 * nbFaces; i++) {
-            calculeAltitudes(i);
-          }
+          calculeAltitudes();
         }
       }
       break;

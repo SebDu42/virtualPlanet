@@ -42,17 +42,18 @@ boolean fichiersExistent() {
   * compte également de la profondeur des fonds marins.
   */
 color couleurAltitudeAvecFond(float altitude) {
-  color couleur;
-  if (altitude > 10) couleur = color(255, 0, 0);
-  else if (altitude > 5) couleur = color(255);
-  else if (altitude > 2.5) couleur = color(128);
-  else if (altitude >= 0) couleur = color(0, 128, 0);
-  else if (altitude > -2.5) couleur = color(0, 192, 255);
-  else if (altitude > -5) couleur = color(0, 128, 255);
-  else if (altitude > -10) couleur = color(0, 0, 128);
-  else couleur = color(255, 0, 0);
+  int r, v, b;
   
-  return couleur;
+  if (altitude > 10) { r = 255; v = 0; b = 0; }
+  else if (altitude > 5) { r = 255; v = 255; b = 255; }
+  else if (altitude > 2.5) { r = 128; v = 128; b = 128; }
+  else if (altitude >= 0) { r = 0; v = 128; b = 0; }
+  else if (altitude > -2.5) { r = 0; v = 192; b = 255; }
+  else if (altitude > -5) { r = 0; v = 128; b = 255; }
+  else if (altitude > -10) { r = 0; v = 0; b = 128; }
+  else { r = 255; v = 0; b = 0; }
+  
+  return r * 65536 + v * 256 + b;
 }
 
 
@@ -62,14 +63,15 @@ color couleurAltitudeAvecFond(float altitude) {
   * fonds).
   */
 color couleurAltitudeSansFond(float altitude) {
-  color couleur;
-  if (altitude > 10) couleur = color(255, 0, 0);
-  else if (altitude > 5) couleur = color(255);
-  else if (altitude > 2.5) couleur = color(128);
-  else if (altitude >= 0) couleur = color(0, 128, 0);
-  else couleur = color(0, 128, 255);
+  int r, v, b;
   
-  return couleur;
+  if (altitude > 10) { r = 255; v = 0; b = 0; }
+  else if (altitude > 5) { r = 255; v = 255; b = 255; }
+  else if (altitude > 2.5) { r = 128; v = 128; b = 128; }
+  else if (altitude >= 0) { r = 0; v = 128; b = 0; }
+  else { r = 0; v = 128; b = 255; }
+  
+  return r * 65536 + v * 256 + b;
 }
 
 int calculeAltitudePosition(float longitude, float latitude) {

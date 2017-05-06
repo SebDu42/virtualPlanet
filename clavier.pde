@@ -59,22 +59,22 @@ void keyPressed() {
   // réponse de l'utilisateur pour savoir s'il faut la garder ou non.
   else if (etape == NOUVELLE_PLANETE) {
       if ((key == 'o') || (key == 'O')) {
-        etape = CHARGE_TEXTURES;
         pourcentageEtapes[0] = 0;
         pourcentageEtapes[1] = 0;
         pourcentageEtapes[2] = 0;
         pourcentageEtapes[3] = 90;
         pourcentageEtapes[4] = 5;
         pourcentageEtapes[5] = 5;
+        thread("chargeTexture");
      }
       if ((key == 'n') || (key == 'N')) {
-        etape = CALCULE_TEXTURES;
         pourcentageEtapes[0] = 0;
         pourcentageEtapes[1] = 90;
         pourcentageEtapes[2] = 5;
         pourcentageEtapes[3] = 0;
         pourcentageEtapes[4] = 0;
         pourcentageEtapes[5] = 5;
+        thread("calculeTexture");
       }
   }
   println(keyCode, " ", key, " ", key == CODED, " ", frameRate);

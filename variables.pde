@@ -93,3 +93,4 @@ float hauteurFenetre;
 int etape = 0;
 int[] pourcentageEtapes = new int[6];
 int indexProgression = 0;
+int progressionMax = 0;

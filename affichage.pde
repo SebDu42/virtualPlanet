@@ -18,20 +18,38 @@
 
 
 /**
+  * Demande à l'utlisateur s'il faut recharger ou non la dernière
+  * planète calculée.
+  */
+void afficheQuestion() {
+  afficheTitre();
+  afficheLicence();
+  strokeWeight(2);
+  textSize(20);
+  stroke(BLANC);
+  fill(BLANC);
+  textAlign(CENTER, CENTER);
+  text("Voulez-vous réutiliser la dernière planète générée (O/N) ?", width / 2, height / 2);
+}
+
+
+/**
   * Affiche les barres de progression lors de l'initialisation.
   *
   * @param numEtape Numéro de l'étape en cours
   * @param progression Progression dans l'étape en cours (entre 0 et maximum)
   * @param maximum Valeur maximale de Progression
   */
-void afficheProgression(int numEtape, int progression, int maximum) {
+void afficheProgression() {
   float pourcentTotale;
-  float pourcentPartielle = (float) progression * 100 / maximum;
+  float pourcentPartielle = (float) indexProgression * 100 / progressionMax;
   int debutTotale = 0;
   
   // Calcul des valeurs de la progression totale
-  for (int i=0; i< numEtape; i++) debutTotale += pourcentageEtapes[i];
-  pourcentTotale = debutTotale + pourcentPartielle * pourcentageEtapes[numEtape] / 100;
+  if (etape != AFFICHE_PLANETE) {
+    
+  for (int i=0; i< etape; i++) debutTotale += pourcentageEtapes[i];
+  pourcentTotale = debutTotale + pourcentPartielle * pourcentageEtapes[etape] / 100;
   
   // Affichage du titre de l'application et de la licence
   afficheTitre();
@@ -45,7 +63,7 @@ void afficheProgression(int numEtape, int progression, int maximum) {
   // Texte descriptif de l'étape en cours
   textAlign(CENTER, BOTTOM);
   text("Initialisation merci de patienter...", width / 2, (height / 2) - 75);
-  text(TEXTE_ETAPES[numEtape], width / 2, (height / 2) - 50);
+  text(TEXTE_ETAPES[etape], width / 2, (height / 2) - 50);
   textAlign(LEFT, BOTTOM);
 
   // Barre donnant la progression totale
@@ -66,7 +84,7 @@ void afficheProgression(int numEtape, int progression, int maximum) {
   stroke(BLANC);
   noFill();
   rect(5, (height / 2) + 35, width - 10, 20); 
-  
+  }
 }
 
 

@@ -16,70 +16,192 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-void calculeTexture(int colonne) {
+
+/**
+  * Première étape de l'initialisation si la planète est recalculée :
+  * Calcul des textures et des altitudes de la planète.
+  */
+void calculeTexture() {
   float r, x, y, z;
   float altitude = 0;
   int index;
   
-//  noiseSeed(0);
+  etape = CALCULE_TEXTURES;
+  progressionMax = 2 * nbPixels;
+  indexProgression = 0;
   
-  for (int ligne = 0; ligne < nbPixels + 1; ligne++) {
-    r = sin( ligne * anglePixel );
-    y = -cos( ligne * anglePixel ); 
-    x = sin( colonne * anglePixel ) * r;
-    z = cos( colonne * anglePixel ) * r;
-    
-    altitude = 24.0 * noise((x + 1) / TAILLE_RELIEF, (y + 1) / TAILLE_RELIEF, (z + 1) / TAILLE_RELIEF) - 12;
-    index = colonne + 2 * ligne * nbPixels;
-    imageTextureAvecFond.pixels[index] = couleurAltitudeAvecFond(altitude);
-    imageTextureSansFond.pixels[index] = couleurAltitudeSansFond(altitude);
-    imageAltitudes.pixels[index] = int(altitude * 1000);   
+//  noiseSeed(0);
+  for (int colonne = 0; colonne < 2 * nbPixels; colonne++) {
+    for (int ligne = 0; ligne < nbPixels + 1; ligne++) {
+      r = sin( ligne * anglePixel );
+      y = -cos( ligne * anglePixel ); 
+      x = sin( colonne * anglePixel ) * r;
+      z = cos( colonne * anglePixel ) * r;
+      
+      altitude = 24.0 * noise((x + 1) / TAILLE_RELIEF, (y + 1) / TAILLE_RELIEF, (z + 1) / TAILLE_RELIEF) - 12;
+      index = colonne + 2 * ligne * nbPixels;
+      imageTextureAvecFond.pixels[index] = couleurAltitudeAvecFond(altitude);
+      imageTextureSansFond.pixels[index] = couleurAltitudeSansFond(altitude);
+      imageAltitudes.pixels[index] = int(altitude * 1000);
+    }
+    indexProgression++;
   }
+  
+  enregistreTexture();
+
+}
+
+
+/**
+  * Deuxième étape de l'initialisation si la planète est recalculée :
+  * Enregistrement des textures et des altitudes de la planète pour pouvoir la
+  * recharger ultérieurement.
+  */
+void enregistreTexture() {
+  
+  etape = ENREGISTRE_TEXTURES;
+  progressionMax = 3;
+  indexProgression = 0;
+  println(100 * indexProgression / progressionMax);
+  
+  // Enregistrement de la texture avec fonds marins
+  imageTextureAvecFond.updatePixels();
+  imageTextureAvecFond.save(NOM_TEXTURE_AVEC_FOND);
+  indexProgression++;
+  println(100 * indexProgression / progressionMax);
+  
+  // Enregistrement de la texture sans fond marins
+  imageTextureSansFond.updatePixels();
+  imageTextureSansFond.save(NOM_TEXTURE_SANS_FOND);
+  indexProgression++;
+  println(100 * indexProgression / progressionMax);
+  
+  // Enregistrement des altitudes
+  imageAltitudes.updatePixels();
+  imageAltitudes.save(NOM_ALTITUDES);
+  indexProgression++;
+  println(100 * indexProgression / progressionMax);
+  
+  etape = CALCULE_DISTRIBUTION;
+
+}
+
+/**
+  * Première étape de l'initialisation si la planète est réchargée :
+  * Chargement des textures et des altitudes de la planète.
+  */
+void chargeTexture() {
+  
+  etape = CHARGE_TEXTURES;
+  progressionMax = 3;
+  indexProgression = 0;
+  println(100 * indexProgression / progressionMax);
+
+  // Chargement de la texture avec fonds marins
+  imageTextureAvecFond = loadImage(NOM_TEXTURE_AVEC_FOND);
+  imageTextureAvecFond.loadPixels();
+  indexProgression++;
+  println(100 * indexProgression / progressionMax);
+
+  // Chargement de la texture sans fond marins
+  imageTextureSansFond = loadImage(NOM_TEXTURE_SANS_FOND);
+  imageTextureSansFond.loadPixels();
+  indexProgression++;
+  println(100 * indexProgression / progressionMax);
+
+  // Chargement des altitudes
+  imageAltitudes = loadImage(NOM_ALTITUDES);      
+  imageAltitudes.loadPixels();
+  indexProgression++;
+  println(100 * indexProgression / progressionMax);
+  
+  corrigeAltitude();
   
 }
 
 
-void corrigeAltitude(int colonne) {
+/**
+  * Deuxième étape de l'initialisation si la planète est rechargée :
+  * Correction des altitudes. Cette correction est nécessaire car les altitudes
+  * sont enregistrer dans une image, et au chargement, le canal Aplha de la
+  * couleur n'a pas la bonne valeur.
+  */
+void corrigeAltitude() {
   color couleur;
   int index;
+  
+  progressionMax = 2 * nbPixels;
+  indexProgression = 0;
+  println(100 * indexProgression / progressionMax);
 
-  for (int ligne = 0; ligne < nbPixels + 1; ligne++) {
-    index = colonne + 2 * ligne * nbPixels;
-    couleur = imageAltitudes.pixels[index];
-    couleur = color(red(couleur), green(couleur),blue(couleur), red(couleur));
-    imageAltitudes.pixels[index] = couleur;
+  for (int colonne = 0; colonne < 2 * nbPixels; colonne++) {
+    for (int ligne = 0; ligne < nbPixels + 1; ligne++) {
+      index = colonne + 2 * ligne * nbPixels;
+      couleur = imageAltitudes.pixels[index];
+      //couleur = color(red(couleur), green(couleur),blue(couleur), red(couleur));
+      couleur = (int)red(couleur) * 65536 + (int)green(couleur) * 256 + (int)blue(couleur);
+      imageAltitudes.pixels[index] = couleur;
+    }
+    indexProgression++;
+    println(100 * indexProgression / progressionMax);
   }
+  
+  etape = CALCULE_DISTRIBUTION;
+
 }
 
 
-void calculeDistribution(int colonne) {
+/** 
+  * Troisième étape de l'initialisation :
+  * Calcul de la distribution des altitudes.
+  */
+    
+void calculeDistribution() {
   float altitude = 0;
   
-  for (int ligne = nbPixels / 4; ligne < 3 * nbPixels / 4; ligne++) {
-    altitude = (float) calculeAltitudePixel(colonne, ligne) / 1000;
-    
-    for (int i = 0; i <= 20; i++) {
-      if (altitude < i - 9.5) {
-        distribution[i] += 1;
-        if (distribution[i] > maxDistribution) maxDistribution = distribution[i];
-        break;
+  progressionMax = 2 * nbPixels;
+  indexProgression = 0;
+  println(100 * indexProgression / progressionMax);
+  
+  for (int colonne = 0; colonne < 2 * nbPixels; colonne++) {
+    for (int ligne = nbPixels / 4; ligne < 3 * nbPixels / 4; ligne++) {
+      altitude = (float) calculeAltitudePixel(colonne, ligne) / 1000;
+      
+      for (int i = 0; i <= 20; i++) {
+        if (altitude < i - 9.5) {
+          distribution[i] += 1;
+          if (distribution[i] > maxDistribution) maxDistribution = distribution[i];
+          break;
+        }
       }
+    }
+    indexProgression++;
+    println(100 * indexProgression / progressionMax);
+  }
+  
+}
+
+//-------|---------|---------|---------|---------|---------|---------|---------|
+/** 
+  * Pré-calcule des coordonnées des sommets de la sphère représantant la
+  * planète pour accélérer l'affichage.
+  * A faire : améliorer la précision en extrapolant les altitudes des points
+  * voisins plutôt qu'en prenant l'altitude du point le plus proche.
+  */
+void calculeAltitudes() {
+  float altitude = 0;
+
+  for (int colonne = 0; colonne <= 2 * nbFaces; colonne++) { 
+    for (int ligne = 0; ligne <= nbFaces; ligne++) {
+      float r = sin( ligne * angleFace );
+      y[colonne][ligne] = -cos( ligne * angleFace ); 
+      x[colonne][ligne] = sin( colonne * angleFace ) * r;
+      z[colonne][ligne] = cos( colonne * angleFace ) * r;
+      altitude = calculeAltitudePixel(round((float) colonne * nbPixels / nbFaces), round((float) ligne * nbPixels / nbFaces));
+      altitudes[colonne][ligne] = altitude / 1000;
     }
   }
   
-}
-
-void calculeAltitudes(int colonne) {
-  float altitude = 0;
-
-  for (int ligne = 0; ligne <= nbFaces; ligne++) {
-    float r = sin( ligne * angleFace );
-    y[colonne][ligne] = -cos( ligne * angleFace ); 
-    x[colonne][ligne] = sin( colonne * angleFace ) * r;
-    z[colonne][ligne] = cos( colonne * angleFace ) * r;
-    altitude = calculeAltitudePixel(round((float) colonne * nbPixels / nbFaces), round((float) ligne * nbPixels / nbFaces));
-    altitudes[colonne][ligne] = altitude / 1000;
-  }
 }
 
 void initialiseCamera() {

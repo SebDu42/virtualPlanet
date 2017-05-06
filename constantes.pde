@@ -82,7 +82,7 @@ final color BLEU_NUIT = color(0, 0, 128);
 /*
  * Noms des fichiers
  */
-final String NOM_TEXTURE_AVEC_FOND = "data/texture_avec_fond.tiff";
-final String NOM_TEXTURE_SANS_FOND = "data/texture_sans_fond.tiff";
-final String NOM_ALTITUDES = "data/altitudes.tiff";
+final String NOM_TEXTURE_AVEC_FOND = "data/texture_avec_fond.bmp";
+final String NOM_TEXTURE_SANS_FOND = "data/texture_sans_fond.bmp";
+final String NOM_ALTITUDES = "data/altitudes.bmp";
 final String NOM_IMAGE_FOND = "data/background/ciel.jpg";
