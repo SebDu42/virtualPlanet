@@ -24,10 +24,10 @@
 boolean fichiersExistent() {
   File fichier;
   
-  fichier = new File(sketchPath(NOM_TEXTURE_AVEC_FOND));
+  fichier = new File(sketchPath(NOM_TEXTURE_AVEC_FONDS));
   if (!fichier.exists()) return false;
 
-  fichier = new File(sketchPath(NOM_TEXTURE_SANS_FOND));
+  fichier = new File(sketchPath(NOM_TEXTURE_SANS_FONDS));
   if (!fichier.exists()) return false;
   
   fichier = new File(sketchPath(NOM_ALTITUDES));

@@ -62,19 +62,19 @@ void keyPressed() {
         pourcentageEtapes[0] = 0;
         pourcentageEtapes[1] = 0;
         pourcentageEtapes[2] = 0;
-        pourcentageEtapes[3] = 90;
-        pourcentageEtapes[4] = 5;
-        pourcentageEtapes[5] = 5;
-        thread("chargeTexture");
+        pourcentageEtapes[3] = 70;
+        pourcentageEtapes[4] = 29;
+        pourcentageEtapes[5] = 1;
+        thread("chargeFichiers");
      }
       if ((key == 'n') || (key == 'N')) {
         pourcentageEtapes[0] = 0;
         pourcentageEtapes[1] = 90;
-        pourcentageEtapes[2] = 5;
+        pourcentageEtapes[2] = 9;
         pourcentageEtapes[3] = 0;
         pourcentageEtapes[4] = 0;
-        pourcentageEtapes[5] = 5;
-        thread("calculeTexture");
+        pourcentageEtapes[5] = 1;
+        thread("calculePlanete");
       }
   }
   println(keyCode, " ", key, " ", key == CODED, " ", frameRate);

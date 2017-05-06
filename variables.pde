@@ -59,8 +59,8 @@ boolean lumiere = true;
 // =========================================
 int nbPixels = ceil(PI * RAYON_MOYEN / RESOLUTION_MIN);
 float anglePixel = PI / nbPixels;
-PImage imageTextureAvecFond = createImage(2 * nbPixels, nbPixels + 1, RGB);
-PImage imageTextureSansFond = createImage(2 * nbPixels, nbPixels + 1, RGB);
+PImage imageTextureAvecFonds = createImage(2 * nbPixels, nbPixels + 1, RGB);
+PImage imageTextureSansFonds = createImage(2 * nbPixels, nbPixels + 1, RGB);
 PImage imageAltitudes = createImage(2 * nbPixels, nbPixels + 1, RGB);
 PImage imageArrierePlan;
 PImage imageArrierePlan2;

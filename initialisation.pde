@@ -21,12 +21,12 @@
   * Première étape de l'initialisation si la planète est recalculée :
   * Calcul des textures et des altitudes de la planète.
   */
-void calculeTexture() {
+void calculePlanete() {
   float r, x, y, z;
   float altitude = 0;
   int index;
   
-  etape = CALCULE_TEXTURES;
+  etape = CALCULE_ALTITUDES;
   progressionMax = 2 * nbPixels;
   indexProgression = 0;
   
@@ -40,14 +40,14 @@ void calculeTexture() {
       
       altitude = 24.0 * noise((x + 1) / TAILLE_RELIEF, (y + 1) / TAILLE_RELIEF, (z + 1) / TAILLE_RELIEF) - 12;
       index = colonne + 2 * ligne * nbPixels;
-      imageTextureAvecFond.pixels[index] = couleurAltitudeAvecFond(altitude);
-      imageTextureSansFond.pixels[index] = couleurAltitudeSansFond(altitude);
+      imageTextureAvecFonds.pixels[index] = couleurAltitudeAvecFond(altitude);
+      imageTextureSansFonds.pixels[index] = couleurAltitudeSansFond(altitude);
       imageAltitudes.pixels[index] = int(altitude * 1000);
     }
     indexProgression++;
   }
   
-  enregistreTexture();
+  enregistreFichiers();
 
 }
 
@@ -57,20 +57,20 @@ void calculeTexture() {
   * Enregistrement des textures et des altitudes de la planète pour pouvoir la
   * recharger ultérieurement.
   */
-void enregistreTexture() {
+void enregistreFichiers() {
   
-  etape = ENREGISTRE_TEXTURES;
+  etape = ENREGISTRE_FICHIERS;
   progressionMax = 3;
   indexProgression = 0;
   
   // Enregistrement de la texture avec fonds marins
-  imageTextureAvecFond.updatePixels();
-  imageTextureAvecFond.save(NOM_TEXTURE_AVEC_FOND);
+  imageTextureAvecFonds.updatePixels();
+  imageTextureAvecFonds.save(NOM_TEXTURE_AVEC_FONDS);
   indexProgression++;
   
   // Enregistrement de la texture sans fond marins
-  imageTextureSansFond.updatePixels();
-  imageTextureSansFond.save(NOM_TEXTURE_SANS_FOND);
+  imageTextureSansFonds.updatePixels();
+  imageTextureSansFonds.save(NOM_TEXTURE_SANS_FONDS);
   indexProgression++;
   
   // Enregistrement des altitudes
@@ -86,20 +86,20 @@ void enregistreTexture() {
   * Première étape de l'initialisation si la planète est réchargée :
   * Chargement des textures et des altitudes de la planète.
   */
-void chargeTexture() {
+void chargeFichiers() {
   
-  etape = CHARGE_TEXTURES;
+  etape = CHARGE_FICHIERS;
   progressionMax = 3;
   indexProgression = 0;
 
   // Chargement de la texture avec fonds marins
-  imageTextureAvecFond = loadImage(NOM_TEXTURE_AVEC_FOND);
-  imageTextureAvecFond.loadPixels();
+  imageTextureAvecFonds = loadImage(NOM_TEXTURE_AVEC_FONDS);
+  imageTextureAvecFonds.loadPixels();
   indexProgression++;
 
   // Chargement de la texture sans fond marins
-  imageTextureSansFond = loadImage(NOM_TEXTURE_SANS_FOND);
-  imageTextureSansFond.loadPixels();
+  imageTextureSansFonds = loadImage(NOM_TEXTURE_SANS_FONDS);
+  imageTextureSansFonds.loadPixels();
   indexProgression++;
 
   // Chargement des altitudes
@@ -107,7 +107,7 @@ void chargeTexture() {
   imageAltitudes.loadPixels();
   indexProgression++;
   
-  corrigeAltitude();
+  corrigeAltitudes();
   
 }
 
@@ -118,7 +118,7 @@ void chargeTexture() {
   * sont enregistrer dans une image, et au chargement, le canal Aplha de la
   * couleur n'a pas la bonne valeur.
   */
-void corrigeAltitude() {
+void corrigeAltitudes() {
   color couleur;
   int index;
   
@@ -178,7 +178,7 @@ void calculeDistribution() {
   * A faire : améliorer la précision en extrapolant les altitudes des points
   * voisins plutôt qu'en prenant l'altitude du point le plus proche.
   */
-void calculeAltitudes() {
+void calculePrimitive() {
   float altitude = 0;
 
   for (int colonne = 0; colonne <= 2 * nbFaces; colonne++) { 

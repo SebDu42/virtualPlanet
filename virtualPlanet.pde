@@ -45,8 +45,8 @@ void setup() {
   frameRate(60);
 
   noiseDetail(100, 0.5);
-  imageTextureAvecFond.loadPixels();
-  imageTextureSansFond.loadPixels();
+  imageTextureAvecFonds.loadPixels();
+  imageTextureSansFonds.loadPixels();
   imageAltitudes.loadPixels();
   
   imageArrierePlan = loadImage(NOM_IMAGE_FOND);
@@ -58,11 +58,11 @@ void setup() {
   else {
     pourcentageEtapes[0] = 0;
     pourcentageEtapes[1] = 90;
-    pourcentageEtapes[2] = 5;
+    pourcentageEtapes[2] = 9;
     pourcentageEtapes[3] = 0;
     pourcentageEtapes[4] = 0;
-    pourcentageEtapes[5] = 5;
-    thread("calculeTexture");
+    pourcentageEtapes[5] = 1;
+    thread("calculePlanete");
   }
 }
 
@@ -85,9 +85,9 @@ void draw() {
 
     // Première étape de l'initialisation si la planète est recalculée :
     // Calcul des textures et des altitudes.
-    case CALCULE_TEXTURES:
-    case ENREGISTRE_TEXTURES:
-    case CHARGE_TEXTURES:
+    case CALCULE_ALTITUDES:
+    case ENREGISTRE_FICHIERS:
+    case CHARGE_FICHIERS:
     case CORRIGE_ALTITUDES:
       afficheProgression();
       break;
@@ -116,7 +116,7 @@ void draw() {
       resolution = 100;
       nbFaces = ceil(PI * RAYON_MOYEN / resolution);
       angleFace = PI / nbFaces;
-      calculeAltitudes();
+      calculePrimitive();
       initialiseCamera();
       afficheProgression();
       break;
@@ -197,14 +197,14 @@ void draw() {
           resolution += 10.0;
           nbFaces = ceil(PI * RAYON_MOYEN / resolution);
           angleFace = PI / nbFaces;
-          calculeAltitudes();
+          calculePrimitive();
         }
         else if (frameRate > FPSMax) {
           resolution -= 10.0;
           if (resolution < 10) resolution = 10;
           nbFaces = ceil(PI * RAYON_MOYEN / resolution);
           angleFace = PI / nbFaces;
-          calculeAltitudes();
+          calculePrimitive();
         }
       }
       break;

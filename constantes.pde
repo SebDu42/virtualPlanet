@@ -20,7 +20,7 @@
 /*
  * Version de l'application
  */
-final String VERSION = "1.1.1";
+final String VERSION = "1.1.2";
 
 
 /*
@@ -49,17 +49,17 @@ final int F1 = 97;
  */
 // Codes des étapes
 final int NOUVELLE_PLANETE = 0;
-final int CALCULE_TEXTURES = 1;
-final int ENREGISTRE_TEXTURES = 2;
-final int CHARGE_TEXTURES = 3;
+final int CALCULE_ALTITUDES = 1;
+final int ENREGISTRE_FICHIERS = 2;
+final int CHARGE_FICHIERS = 3;
 final int CORRIGE_ALTITUDES = 4;
 final int CALCULE_DISTRIBUTION = 5;
 final int AFFICHE_PLANETE = 6;
 // Texte pour l'écran de progression
 final String[] TEXTE_ETAPES = {"",
                                "Calcul des altitudes", 
-                               "Enregistrement des textures",
-                               "Chargement des textures",
+                               "Enregistrement des fichier",
+                               "Chargement des fichiers",
                                "Calcul des altitudes",
                                "Calcul de la distribution"};
 // Pas de calcul pour l'initialisation
@@ -82,7 +82,7 @@ final color BLEU_NUIT = color(0, 0, 128);
 /*
  * Noms des fichiers
  */
-final String NOM_TEXTURE_AVEC_FOND = "data/texture_avec_fond.tiff";
-final String NOM_TEXTURE_SANS_FOND = "data/texture_sans_fond.tiff";
+final String NOM_TEXTURE_AVEC_FONDS = "data/texture_avec_fonds.tiff";
+final String NOM_TEXTURE_SANS_FONDS = "data/texture_sans_fonds.tiff";
 final String NOM_ALTITUDES = "data/altitudes.tiff";
 final String NOM_IMAGE_FOND = "data/background/ciel.jpg";
