@@ -64,20 +64,16 @@ void dessinePlanete(float rayon, boolean fonds) {
     texture(imageTexture);
     altitude = altitudes[0][0];
     if (!fonds && altitude < 0) {
-      fill(couleurAltitudeAvecFond(-4));
       altitude = 0;
     } else {
-      fill(couleurAltitudeAvecFond(altitude));
       altitude *= echelleRelief;
     }
     vertex(0, -( rayon + altitude) * echelle, 0, 0, 0);
     for (int j = 1; j < nbFaces; j++) {
       altitude = altitudes[i][j];
       if (!fonds && altitude < 0) {
-        fill(couleurAltitudeAvecFond(-4));
         altitude = 0;
       } else {
-        fill(couleurAltitudeAvecFond(altitude));
         altitude *= echelleRelief;
       }
       float r = ( rayon + altitude ) * echelle;
@@ -85,10 +81,8 @@ void dessinePlanete(float rayon, boolean fonds) {
       if (i < 2 * nbFaces - 1) altitude = altitudes[i + 1][j];
       else altitude = altitudes[0][j];
       if (!fonds && altitude < 0) {
-        fill(couleurAltitudeAvecFond(-4));
         altitude = 0;
       } else {
-        fill(couleurAltitudeAvecFond(altitude));
         altitude *= echelleRelief;
       }
       r = (rayon + altitude ) * echelle;
@@ -97,10 +91,8 @@ void dessinePlanete(float rayon, boolean fonds) {
     }
     altitude = altitudes[0][nbFaces];
     if (!fonds && altitude < 0) {
-      fill(couleurAltitudeAvecFond(-4));
       altitude = 0;
     } else {
-      fill(couleurAltitudeAvecFond(altitude));
       altitude *= echelleRelief;
     }
     vertex(0, ( rayon + altitude) * echelle, 0, 0, imageTexture.height - 1);
