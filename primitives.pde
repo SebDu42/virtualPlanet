@@ -17,7 +17,7 @@
  */
 
 // Dessine la planete
-void dessinePlanete(float res, float rayon, boolean fond) {
+void dessinePlanete(float rayon, boolean fond) {
   noStroke();
   float latitude = 0;
   float longitude = 0;
@@ -81,66 +81,4 @@ void dessinePlanete(float res, float rayon, boolean fond) {
     vertex(0, ( rayon + altitude) * echelle, 0, 0, imageTexture.height - 1);
     endShape(CLOSE);
   }
-}
-
-
-// Dessine un cylindre
-void dessineCylindre(int NOMBRE_FACESs, float diametre, float hauteur) {
-  float angle = 360 / NOMBRE_FACESs;
-  float rayon = diametre / 2;
-  float demiHauteur = hauteur / 2;
-
-  // Dessine le disque supérieur
-  beginShape();
-  for (int i = 0; i < NOMBRE_FACESs; i++) {
-    float x = cos( radians( i * angle ) ) * rayon;
-    float z = sin( radians( i * angle ) ) * rayon;
-    vertex(x, -demiHauteur, z);
-  }
-  endShape(CLOSE);
-
-  // Dessine le disque inférieur
-  beginShape();
-  for (int i = 0; i < NOMBRE_FACESs; i++) {
-    float x = cos( radians( i * angle ) ) * rayon;
-    float z = sin( radians( i * angle ) ) * rayon;
-    vertex(x, demiHauteur, z);
-  }
-  endShape(CLOSE);
-
-  // Dessine le corps
-  beginShape(TRIANGLE_STRIP);
-  for (int i = 0; i < NOMBRE_FACESs + 1; i++) {
-    float x = cos( radians( i * angle ) ) * rayon;
-    float z = sin( radians( i * angle ) ) * rayon;
-    vertex( x, demiHauteur, z);
-    vertex( x, -demiHauteur, z);
-  }
-  endShape(CLOSE);
-}
-
-// Dessine un cône
-void dessineCone(int NOMBRE_FACESs, float diametre, float hauteur) {
-  float angle = 360 / NOMBRE_FACESs;
-  float rayon = diametre / 2;
-  float demiHauteur = hauteur / 2;
-
-  // Dessine le disque inférieur
-  beginShape();
-  for (int i = 0; i < NOMBRE_FACESs; i++) {
-    float x = cos( radians( i * angle ) ) * rayon;
-    float z = sin( radians( i * angle ) ) * rayon;
-    vertex(x, demiHauteur, z);
-  }
-  endShape(CLOSE);
-
-  // Dessine le corps
-  beginShape(TRIANGLE_STRIP);
-  for (int i = 0; i < NOMBRE_FACESs + 1; i++) {
-    float x = cos( radians( i * angle ) ) * rayon;
-    float z = sin( radians( i * angle ) ) * rayon;
-    vertex( x, demiHauteur, z);
-    vertex( 0, -demiHauteur, 0);
-  }
-  endShape(CLOSE);
 }

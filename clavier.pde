@@ -36,7 +36,7 @@ void keyPressed() {
     else {
       if ((key == 'a') || (key == 'A')) montreAltitude = !montreAltitude;
       if ((key == 'd') || (key == 'D')) montreDistribution = !montreDistribution;
-      if ((key == 'f') || (key == 'F')) montreFond = !montreFond;
+      if ((key == 'f') || (key == 'F')) montreFonds = !montreFonds;
       if ((key == 'i') || (key == 'I')) montreInformations = !montreInformations;
       if ((key == 'l') || (key == 'L')) lumiere = !lumiere;
       if ((key == 'r') || (key == 'R')) rotation = !rotation;

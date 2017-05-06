@@ -248,7 +248,7 @@ void draw() {
       // Rotation de la planète
       rotateY(angleRotation);
       // Affichage de la planète
-      dessinePlanete(resolution, RAYON_MOYEN, montreFond);
+      dessinePlanete(RAYON_MOYEN, montreFonds);
       // Calcule du prochain angle de rotation en tenant compte du frameRate
       // pour que la vitesse de rotation soit constante.
       if (rotation) angleRotation = (angleRotation + 0.1 / frameRate) % TWO_PI;
