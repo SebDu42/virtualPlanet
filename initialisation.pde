@@ -139,7 +139,7 @@ void corrigeAltitude() {
       index = colonne + 2 * ligne * nbPixels;
       couleur = imageAltitudes.pixels[index];
       //couleur = color(red(couleur), green(couleur),blue(couleur), red(couleur));
-      couleur = (int)red(couleur) * 65536 + (int)green(couleur) * 256 + (int)blue(couleur);
+      couleur = (couleur & 0xFFFFFF) | (couleur & 0xFF0000) << 8;
       imageAltitudes.pixels[index] = couleur;
     }
     indexProgression++;
