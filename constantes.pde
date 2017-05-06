@@ -34,8 +34,8 @@ final float RESOLUTION_MIN = 10;  // Distance entre 2 points altimétrique au ni
  * Paramètres d'affichage
  */
 // Nombres d'images par seconde : utilisés pour ajuster la résolution de la surface
-final int FPSMax = 25; // Nombre maximal d'images par seconde
-final int FPSMin = 20; // Nombre minimal d'images par seconde
+final int FPSMax = 28; // Nombre maximal d'images par seconde
+final int FPSMin = 24; // Nombre minimal d'images par seconde
 
 /*
  * Code des touches (pour les touches non définies par défaut)
