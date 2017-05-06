@@ -171,28 +171,6 @@ void calculeDistribution() {
   
 }
 
-//-------|---------|---------|---------|---------|---------|---------|---------|
-/** 
-  * Pré-calcule des coordonnées des sommets de la sphère représantant la
-  * planète pour accélérer l'affichage.
-  * A faire : améliorer la précision en extrapolant les altitudes des points
-  * voisins plutôt qu'en prenant l'altitude du point le plus proche.
-  */
-void calculePrimitive() {
-  float altitude = 0;
-
-  for (int colonne = 0; colonne <= 2 * nbFaces; colonne++) { 
-    for (int ligne = 0; ligne <= nbFaces; ligne++) {
-      float r = sin( ligne * angleFace );
-      y[colonne][ligne] = -cos( ligne * angleFace ); 
-      x[colonne][ligne] = sin( colonne * angleFace ) * r;
-      z[colonne][ligne] = cos( colonne * angleFace ) * r;
-      altitude = calculeAltitudePixel(round((float) colonne * nbPixels / nbFaces), round((float) ligne * nbPixels / nbFaces));
-      altitudes[colonne][ligne] = altitude / 1000;
-    }
-  }
-  
-}
 
 void initialiseCamera() {
   r = (altitudeCamera + RAYON_MOYEN) * echelle * cos(radians(latitudeCamera));
