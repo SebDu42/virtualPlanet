@@ -24,14 +24,17 @@
   */
 void calculePrimitive() {
   float altitude = 0;
+  
+  nbFaces = ceil(PI * RAYON_MOYEN / resolution);
+  angleFace = PI / (nbFaces - 1);
 
-  for (int colonne = 0; colonne <= 2 * nbFaces; colonne++) { 
-    for (int ligne = 0; ligne <= nbFaces; ligne++) {
+  for (int colonne = 0; colonne < 2 * nbFaces - 1; colonne++) { 
+    for (int ligne = 0; ligne < nbFaces; ligne++) {
       float r = sin( ligne * angleFace );
       y[colonne][ligne] = -cos( ligne * angleFace ); 
       x[colonne][ligne] = sin( colonne * angleFace ) * r;
       z[colonne][ligne] = cos( colonne * angleFace ) * r;
-      altitude = calculeAltitudePixel(round((float) colonne * nbPixels / nbFaces), round((float) ligne * nbPixels / nbFaces));
+      altitude = calculeAltitudePosition(colonne * degrees(angleFace) - 180, 90 - ligne * degrees(angleFace));
       altitudes[colonne][ligne] = altitude / 1000;
     }
   }
@@ -44,6 +47,7 @@ void calculePrimitive() {
   */
 void dessinePlanete(float rayon, boolean fonds) {
   noStroke();
+  
   float latitude = 0;
   float longitude = 0;
   float altitude = 0;
@@ -55,47 +59,74 @@ void dessinePlanete(float rayon, boolean fonds) {
   else {
      imageTexture = imageTextureSansFonds;
   }
-  float pasTextureX = imageTextureAvecFonds.width / (float)(2 * nbFaces - 1);
+  float pasTextureX = imageTextureAvecFonds.width / (float)(2 * nbFaces - 2);
   float pasTextureY = imageTextureAvecFonds.height / (float)(nbFaces - 1);
 
-  
-  for (int i = 0; i < 2 * nbFaces; i++) {
-    beginShape(TRIANGLE_STRIP);
-    texture(imageTexture);
-    altitude = altitudes[0][0];
+  beginShape(TRIANGLE_FAN);
+  texture(imageTexture);
+  altitude = altitudes[0][0];
+  if (!fonds && altitude < 0) {
+    altitude = 0;
+  } else {
+    altitude *= echelleRelief;
+  }
+  vertex(0, -(rayon + altitude) * echelle, 0, 0, 0);
+  for (int colonne = 0; colonne < 2 * nbFaces - 2; colonne++) {
+    altitude = altitudes[colonne][1];
     if (!fonds && altitude < 0) {
       altitude = 0;
     } else {
       altitude *= echelleRelief;
     }
-    vertex(0, -( rayon + altitude) * echelle, 0, 0, 0);
-    for (int j = 1; j < nbFaces; j++) {
-      altitude = altitudes[i][j];
+    float r = ( rayon + altitude ) * echelle;
+    vertex(x[colonne][1] * r, y[colonne][1] * r, z[colonne][1] * r, colonne * pasTextureX, pasTextureY);
+  }
+  endShape();
+
+  for (int ligne = 1; ligne < nbFaces - 1; ligne++) {
+    beginShape(QUAD_STRIP);
+    texture(imageTexture);
+    for (int colonne = 0; colonne < 2 * nbFaces - 1; colonne++) {
+      altitude = altitudes[colonne][ligne];
       if (!fonds && altitude < 0) {
         altitude = 0;
       } else {
         altitude *= echelleRelief;
       }
       float r = ( rayon + altitude ) * echelle;
-      vertex(x[i][j] * r, y[i][j] * r, z[i][j] * r, i * pasTextureX, j * pasTextureY);
-      if (i < 2 * nbFaces - 1) altitude = altitudes[i + 1][j];
-      else altitude = altitudes[0][j];
+      vertex(x[colonne][ligne] * r, y[colonne][ligne] * r, z[colonne][ligne] * r, colonne * pasTextureX, ligne * pasTextureY);
+      altitude = altitudes[colonne][ligne + 1];
       if (!fonds && altitude < 0) {
         altitude = 0;
       } else {
         altitude *= echelleRelief;
       }
-      r = (rayon + altitude ) * echelle;
-      if (i < 2 * nbFaces - 1) vertex(x[i+1][j] * r, y[i+1][j] * r, z[i+1][j] * r,  (i+1) * pasTextureX, j * pasTextureY);
-      else vertex(x[0][j] * r, y[0][j] * r, z[0][j] * r, (i+1) * pasTextureX, j * pasTextureY);
+      r = ( rayon + altitude ) * echelle;
+      vertex(x[colonne][ligne + 1] * r, y[colonne][ligne + 1] * r, z[colonne][ligne + 1] * r, colonne * pasTextureX, (ligne + 1) * pasTextureY);
     }
-    altitude = altitudes[0][nbFaces];
+    endShape(CLOSE);
+  }
+
+  
+  beginShape(TRIANGLE_FAN);
+  texture(imageTexture);
+  altitude = altitudes[0][nbFaces - 1];
+  if (!fonds && altitude < 0) {
+    altitude = 0;
+  } else {
+    altitude *= echelleRelief;
+  }
+  vertex(0, (rayon + altitude) * echelle, 0, 0, (nbFaces - 1) * pasTextureY);
+  for (int colonne = 0; colonne < 2 * nbFaces - 2; colonne++) {
+    altitude = altitudes[colonne][nbFaces - 2];
     if (!fonds && altitude < 0) {
       altitude = 0;
     } else {
       altitude *= echelleRelief;
     }
-    vertex(0, ( rayon + altitude) * echelle, 0, 0, imageTexture.height - 1);
-    endShape(CLOSE);
+    float r = ( rayon + altitude ) * echelle;
+    vertex(x[colonne][nbFaces - 2] * r, y[colonne][nbFaces - 2] * r, z[colonne][nbFaces - 2] * r, colonne * pasTextureX, (nbFaces - 2) * pasTextureY);
   }
+  endShape();
+   
 }

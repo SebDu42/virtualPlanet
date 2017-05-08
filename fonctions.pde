@@ -87,12 +87,14 @@ int calculeAltitudePosition(float longitude, float latitude) {
   */
 int calculeAltitudePixel(int x, int y) {
  
-  if (x < 0) x = 0;
-  else if (x >= 2 * nbPixels) x = 2 * nbPixels - 1;
-  if (y < 0) y = 0;
-  else if (y > nbPixels) y = nbPixels;
+  //if (x < 0) x = 0;
+  //else if (x > 2 * nbPixels - 2) x = 2 * nbPixels - 2;
+  //if (y < 0) y = 0;
+  //else if (y > nbPixels - 1) y = nbPixels - 1;
+  x = x % (2 * nbPixels - 2);
+  y = y % (nbPixels);
   
-  color couleur = imageAltitudes.pixels[x + 2 * y * nbPixels];
+  color couleur = imageAltitudes.pixels[x + y * (2 * nbPixels - 2)];
   //println(x, y, couleur);
   
   return couleur;

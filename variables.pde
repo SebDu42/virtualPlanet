@@ -21,8 +21,8 @@
 // ===================================
 float echelleRelief = 30.0;
 float resolution = RESOLUTION_MIN;
-int nbFaces = ceil(PI * RAYON_MOYEN / resolution);
-float angleFace = PI / nbFaces;
+int nbFaces = ceil(PI * RAYON_MOYEN / RESOLUTION_MIN);
+float angleFace = PI / (nbFaces - 1);
 float angleRotation = 0.0;
 float echelle = 1.0 / 10.0;
 // Utilisé pour adapter la résolution toute les 10 images.
@@ -31,10 +31,10 @@ int compteur = 0;
 // ==================
 // Tableau des vertex
 // ==================
-float[][] altitudes = new float[2 * nbFaces][nbFaces + 1];
-float[][] x = new float[2 * nbFaces][nbFaces + 1];
-float[][] y = new float[2 * nbFaces][nbFaces + 1];
-float[][] z = new float[2 * nbFaces][nbFaces + 1];
+float[][] altitudes = new float[2 * nbFaces - 1][nbFaces];
+float[][] x = new float[2 * nbFaces - 2][nbFaces];
+float[][] y = new float[2 * nbFaces - 2][nbFaces];
+float[][] z = new float[2 * nbFaces - 2][nbFaces];
 
 // ==========================
 // Distribution des altitudes
@@ -58,10 +58,10 @@ boolean lumiere = true;
 // Images pour les textures et les altitudes
 // =========================================
 int nbPixels = ceil(PI * RAYON_MOYEN / RESOLUTION_MIN);
-float anglePixel = PI / nbPixels;
-PImage imageTextureAvecFonds = createImage(2 * nbPixels, nbPixels + 1, RGB);
-PImage imageTextureSansFonds = createImage(2 * nbPixels, nbPixels + 1, RGB);
-PImage imageAltitudes = createImage(2 * nbPixels, nbPixels + 1, RGB);
+float anglePixel = PI / (nbPixels - 1);
+PImage imageTextureAvecFonds = createImage(2 * nbPixels - 2, nbPixels, RGB);
+PImage imageTextureSansFonds = createImage(2 * nbPixels - 2, nbPixels, RGB);
+PImage imageAltitudes = createImage(2 * nbPixels - 2, nbPixels, RGB);
 PImage imageArrierePlan;
 PImage imageArrierePlan2;
 

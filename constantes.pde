@@ -60,7 +60,7 @@ final String[] TEXTE_ETAPES = {"",
                                "Calcul des altitudes", 
                                "Enregistrement des fichier",
                                "Chargement des fichiers",
-                               "Calcul des altitudes",
+                               "Correction des altitudes",
                                "Calcul de la distribution"};
 // Pas de calcul pour l'initialisation
 final int PAS_CALCUL_ALTITUDE = 5;

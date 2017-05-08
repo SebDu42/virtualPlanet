@@ -166,15 +166,11 @@ void draw() {
         compteur = 0;
         if (frameRate < FPSMin) {
           resolution += 10.0;
-          nbFaces = ceil(PI * RAYON_MOYEN / resolution);
-          angleFace = PI / nbFaces;
           calculePrimitive();
         }
         else if (frameRate > FPSMax) {
           resolution -= 10.0;
           if (resolution < 10) resolution = 10;
-          nbFaces = ceil(PI * RAYON_MOYEN / resolution);
-          angleFace = PI / nbFaces;
           calculePrimitive();
         }
       }

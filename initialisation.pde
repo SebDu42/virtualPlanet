@@ -27,19 +27,19 @@ void calculePlanete() {
   int index;
   
   etape = CALCULE_ALTITUDES;
-  progressionMax = 2 * nbPixels;
+  progressionMax = 2 * nbPixels - 2;
   indexProgression = 0;
   
 //  noiseSeed(0);
-  for (int colonne = 0; colonne < 2 * nbPixels; colonne++) {
-    for (int ligne = 0; ligne < nbPixels + 1; ligne++) {
+  for (int colonne = 0; colonne < 2 * nbPixels - 2; colonne++) {
+    for (int ligne = 0; ligne < nbPixels; ligne++) {
       r = sin( ligne * anglePixel );
       y = -cos( ligne * anglePixel ); 
       x = sin( colonne * anglePixel ) * r;
       z = cos( colonne * anglePixel ) * r;
       
       altitude = 24.0 * noise((x + 1) / TAILLE_RELIEF, (y + 1) / TAILLE_RELIEF, (z + 1) / TAILLE_RELIEF) - 12;
-      index = colonne + 2 * ligne * nbPixels;
+      index = colonne + ligne * (2 * nbPixels - 2);
       imageTextureAvecFonds.pixels[index] = couleurAltitudeAvecFond(altitude);
       imageTextureSansFonds.pixels[index] = couleurAltitudeSansFond(altitude);
       imageAltitudes.pixels[index] = int(altitude * 1000);
@@ -123,12 +123,12 @@ void corrigeAltitudes() {
   int index;
   
   etape = CORRIGE_ALTITUDES;
-  progressionMax = 2 * nbPixels;
+  progressionMax = 2 * nbPixels - 2;
   indexProgression = 0;
 
-  for (int colonne = 0; colonne < 2 * nbPixels; colonne++) {
-    for (int ligne = 0; ligne < nbPixels + 1; ligne++) {
-      index = colonne + 2 * ligne * nbPixels;
+  for (int colonne = 0; colonne < 2 * nbPixels - 2; colonne++) {
+    for (int ligne = 0; ligne < nbPixels; ligne++) {
+      index = colonne + ligne * (2 * nbPixels - 2);
       couleur = imageAltitudes.pixels[index];
       //couleur = color(red(couleur), green(couleur),blue(couleur), red(couleur));
       couleur = (couleur & 0xFFFFFF) | (couleur & 0xFF0000) << 8;
@@ -151,10 +151,10 @@ void calculeDistribution() {
   float altitude = 0;
   
   etape = CALCULE_DISTRIBUTION;
-  progressionMax = 2 * nbPixels;
+  progressionMax = 2 * nbPixels - 2;
   indexProgression = 0;
   
-  for (int colonne = 0; colonne < 2 * nbPixels; colonne++) {
+  for (int colonne = 0; colonne < 2 * nbPixels - 2; colonne++) {
     for (int ligne = nbPixels / 4; ligne < 3 * nbPixels / 4; ligne++) {
       altitude = (float) calculeAltitudePixel(colonne, ligne) / 1000;
       
@@ -180,8 +180,6 @@ void calculeDistribution() {
   */
 void initialiseScene() {
       resolution = 100;
-      nbFaces = ceil(PI * RAYON_MOYEN / resolution);
-      angleFace = PI / nbFaces;
       calculePrimitive();
       modifiePositionCamera();  
 }
